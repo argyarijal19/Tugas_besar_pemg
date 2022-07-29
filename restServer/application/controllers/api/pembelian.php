@@ -11,49 +11,61 @@ class Pembelian extends RESTController
     function __construct($config = 'rest')
     {
         parent::__construct($config);
-        $this->load->database();
+        $this->load->model('Pembelian_Model');
     }
+
+    function pembelianid_get()
+    {
+        $id = $this->get('id_pembelian');
+        $data = $this->Pembelian_Model->getPembelianID($id);
+        if($data != null ){
+            $this->response([
+            'message' => 'SUCCESS !!',
+            'data' => $data,
+            'status' => 200
+            ], 200);
+        }else{
+            $this->response([
+                'message' => 'DATA DOES NOT EXIST !!',
+                'data' => $data,
+                'status' => 404
+            ], 404);
+        }
+    }
+
     function index_get()
     {
         $id = $this->get('id_pembelian');
-        if ($id == '') {
-            $this->db->select('p.tanggal_pembelian, p.total_pembelian, p.id_ongkir, p.nama_kota, p.tarif, p.alamat_rumah, p.status_pembelian, p.resi_pengiriman, l.nama_pelanggan');
-            $this->db->from('pembelian p');
-            $this->db->join('pelanggan l', 'p.id_pelanggan=l.id_pelanggan');
-            $pembelian = $this->db->get()->result();
-        } else {
-            $this->db->where('id_pembelian', $id);
-            $this->db->select('p.tanggal_pembelian, p.total_pembelian, p.id_ongkir, p.nama_kota, p.tarif, p.alamat_rumah, p.status_pembelian, p.resi_pengiriman, l.nama_pelanggan');
-            $this->db->from('pembelian p');
-            $this->db->join('pelanggan l', 'p.id_pelanggan=l.id_pelanggan');
-            $pembelian = $this->db->get()->result();
+        $data = $this->Pembelian_Model->getPembelian();
+        if($data != null ){
+            $this->response([
+            'message' => 'SUCCESS !!',
+            'data' => $data,
+            'status' => 200
+            ], 200);
+        }else{
+            $this->response([
+                'message' => 'DATA DOES NOT EXIST !!',
+                'data' => $data,
+                'status' => 404
+            ], 404);
         }
-        $this->response($pembelian, 200);
     }
+
     function index_post()
     {
-        $data = array(
-            'id_pelanggan' => $this->post('id_pelanggan'),
-            'tanggal_pembelian' => $this->post('tanggal_pembelian'),
-            'total_pembelian' => $this->post('total_pembelian'),
-            'id_ongkir' => $this->post('id_ongkir'),
-            'nama_kota' => $this->post('nama_kota'),
-            'tarif' => $this->post('tarif'),
-            'alamat_rumah' => $this->post('alamat_rumah'),
-            'status_pembelian' => $this->post('status_pembelian'),
-            'resi_pengiriman' => $this->post('resi_pengiriman')
-        );
-        $insert = $this->db->insert('pembelian', $data);
+        
+        $insert = $this->Pembelian_Model->postpembelian();
         if ($insert) {
             // $this->response($data, 200);
-            $this->response(['status' => 'success', 'message' => 'Pembelian Berhasil Ditambahkan!', 'data' => $data], 200);
+            $this->response(['status' => 'success', 'message' => 'Pembelian Berhasil Ditambahkan!', 'data' => $insert], 200);
         } else {
             $this->response(array('status' => 'fail', 502));
         }
     }
     function index_put()
     {
-        $npm = $this->put('id_pembelian');
+        $id = $this->put('id_pembelian');
         $data = array(
             'id_pelanggan' => $this->put('id_pelanggan'),
             'tanggal_pembelian' => $this->put('tanggal_pembelian'),
@@ -65,8 +77,7 @@ class Pembelian extends RESTController
             'status_pembelian' => $this->put('status_pembelian'),
             'resi_pengiriman' => $this->put('resi_pengiriman')
         );
-        $this->db->where('id_pembelian', $npm);
-        $update = $this->db->update('pembelian', $data);
+        $update = $this->Pembelian_Model->updatepembelian($id, $data);
         if ($update) {
             if ($this->db->affected_rows() == 1) {
                 $this->response(['status' => 'success', 'message' => 'Pembelian berhasil UPDATE !', 'data' => $data], 200);
@@ -80,8 +91,7 @@ class Pembelian extends RESTController
     function index_delete()
     {
         $id = $this->delete('id_pembelian');
-        $this->db->where('id_pembelian', $id);
-        $delete = $this->db->delete('pembelian');
+        $delete = $this->Pembelian_Model->deletepembelian($id);
         if ($delete) {
             $this->response(array('status' => true, 'message' => 'Pembellian Berhasil terhapus !!!'), 202);
         } else {

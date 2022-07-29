@@ -11,54 +11,69 @@ class Admin extends RESTController
     function __construct($config = 'rest')
     {
         parent::__construct($config);
-        $this->load->database();
+        $this->load->model('Admin_Model');
+    }
+    function adminID_get()
+    {
+        $id = $this->get('id_admin');
+        $data = $this->Admin_Model->getAdminID($id);
+        if($data != null ){
+            $this->response([
+            'message' => 'SUCCESS !!',
+            'data' => $data,
+            'status' => 200
+            ], 200);
+        }else{
+            $this->response([
+                'message' => 'DATA DOES NOT EXIST !!',
+                'data' => $data,
+                'status' => 404
+            ], 404);
+        }
     }
     function index_get()
     {
         $id = $this->get('id_admin');
-        if ($id == '') {
-            $this->db->select('id_admin, username, password, nama_lengkap, foto_profil');
-            $this->db->from('admin');
-            $pelanggan = $this->db->get()->result();
-        } else {
-            $this->db->where('id_admin', $id);            
-            $this->db->from('admin');
-            $pelanggan = $this->db->get()->result();
+        $data = $this->Admin_Model->getAdmin();
+        if($data != null ){
+            $this->response([
+            'message' => 'SUCCESS !!',
+            'data' => $data,
+            'status' => 200
+            ], 200);
+        }else{
+            $this->response([
+                'message' => 'DATA DOES NOT EXIST !!',
+                'data' => $data,
+                'status' => 404
+            ], 404);
         }
-        $this->response($pelanggan, 200);
     }
     function index_post()
     {
-        $data = array(
-            'username' => $this->post('username'),
-            'password' => $this->post('password'),
-            'nama_lengkap' => $this->post('nama_lengkap'),
-            'foto_profil' => $this->post('foto_profil')
-        );
-        $insert = $this->db->insert('admin', $data);
+        $insert = $this->Admin_Model->postadmin();
         if ($insert) {
             // $this->response($data, 200);
-            $this->response(['status' => 'success', 'message' => 'kategor Berhasil Di Tambahkan !', 'data' => $data], 200);
+            $this->response(['status' => 'success', 'message' => 'Admin Berhasil Di Tambahkan !', 'data' => $insert], 200);
         } else {
             $this->response(array('status' => 'fail', 502));
         }
     }
     function index_put()
     {
-        $npm = $this->put('id_admin');
+        $id = $this->put('id_admin');
         $data = array(
             'username' => $this->put('username'),
             'password' => $this->put('password'),
             'nama_lengkap' => $this->put('nama_lengkap'),
             'foto_profil' => $this->put('foto_profil')
         );
-        $this->db->where('id_admin', $npm);
-        $update = $this->db->update('admin', $data);
+        $update = $this->Admin_Model->updateadmin($id, $data);
         if ($update) {
             if ($this->db->affected_rows() == 1) {
                 $this->response(['status' => 'success', 'message' => 'admin UPDATED !', 'data' => $data], 200);
             } else {
-                $this->response(['status' => 'update failed', 'message' => 'something went wrong!!'], 400);
+                $this->response(['status' => 'update failed', 'message' => 'something went wrong!!, Maybe Your ID Is INVALID'], 400);
             }
         } else {
             $this->response(array('status' => 'fail', 502));
@@ -67,8 +82,7 @@ class Admin extends RESTController
     function index_delete()
     {
         $id = $this->delete('id_admin');
-        $this->db->where('id_admin', $id);
-        $delete = $this->db->delete('admin');
+        $delete = $this->Admin_Model->deleteadmin($id);
         if ($delete) {
             $this->response(array('status' => true, 'message' => 'admin has been DELETED !!!'), 202);
         } else {

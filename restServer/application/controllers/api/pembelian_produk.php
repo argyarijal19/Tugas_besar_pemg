@@ -11,50 +11,65 @@ class Pembelian_Produk extends RESTController
     function __construct($config = 'rest')
     {
         parent::__construct($config);
-        $this->load->database();
+        $this->load->model('Pembelianproduk_Model');
     }
-    function index_get()
+
+    function pembelianprodukID_get()
     {
         $id = $this->get('id_pembelian_produk');
-        if ($id == '') {
-            $this->db->select('nama, harga, berat, sub_berat, sub_harga, jumlah ');
-            $this->db->from('pembelian_produk');
-            $pembelian_produk = $this->db->get()->result();
-        } else {
-            $this->db->where('id_pembelian_produk', $id);
-            $this->db->select('nama, harga, berat, sub_berat, sub_harga, jumlah ');
-            $this->db->from('pembelian_produk');
-            $pembelian_produk = $this->db->get()->result();
+        $data = $this->Pembelianproduk_Model->getPembelianprodukID($id);
+        if($data != null ){
+            $this->response([
+            'message' => 'SUCCESS !!',
+            'data' => $data,
+            'status' => 200
+            ], 200);
+        }else{
+            $this->response([
+                'message' => 'DATA DOES NOT EXIST !!',
+                'data' => $data,
+                'status' => 404
+            ], 404);
         }
-        $this->response($pembelian_produk, 200);
     }
+
+    function index_get()
+    {
+        $data = $this->Pembelianproduk_Model->getPembelianproduk();
+        if($data != null ){
+            $this->response([
+            'message' => 'SUCCESS !!',
+            'data' => $data,
+            'status' => 200
+            ], 200);
+        }else{
+            $this->response([
+                'message' => 'DATA DOES NOT EXIST !!',
+                'data' => $data,
+                'status' => 404
+            ], 404);
+        }
+    }
+
     function index_post()
     {
-        $data = array(
-            'id_produk' => $this->post('id_produk'),
-            'id_pembelian' => $this->post('id_pembelian'),
-            'idproduk' => $this->post('idproduk'),
-            'nama' => $this->post('nama'),
-            'harga' => $this->post('harga'),
-            'berat' => $this->post('berat'),
-            'sub_berat' => $this->post('sub_berat'),
-            'sub_harga' => $this->post('sub_harga'),
-            'jumlah' => $this->post('jumlah')
-        );
-        $insert = $this->db->insert('pembelian_produk', $data);
+        $insert = $this->Pembelianproduk_Model->postpembelianproduk();
         if ($insert) {
-            $this->response($data, 200);
+            $this->response([
+                'status' => 'SUCCESS !!',
+                'data' => $insert, 
+                'respon_code' => 200], 
+                200);
         } else {
             $this->response(array('status' => 'fail', 502));
         }
     }
     function index_put()
     {
-        $npm = $this->put('id_transaksi');
+        $id = $this->put('id_pembelian_produk');
         $data = array(
             'id_produk' => $this->put('id_produk'),
             'id_pembelian' => $this->put('id_pembelian'),
-            'idproduk' => $this->put('idproduk'),
             'nama' => $this->put('nama'),
             'harga' => $this->put('harga'),
             'berat' => $this->put('berat'),
@@ -62,13 +77,12 @@ class Pembelian_Produk extends RESTController
             'sub_harga' => $this->put('sub_harga'),
             'jumlah' => $this->put('jumlah')
         );
-        $this->db->where('id_pembelian_produk', $npm);
-        $update = $this->db->update('pembelian_produk', $data);
+        $update = $this->Pembelianproduk_Model->updatepembelianproduk($id, $data);
         if ($update) {
             if ($this->db->affected_rows() == 1) {
                 $this->response(['status' => 'success', 'message' => 'Pembelian Produk Berhasil Update !', 'data' => $data], 200);
             } else {
-                $this->response(['status' => 'update failed', 'message' => 'something went wrong!!'], 400);
+                $this->response(['status' => 'update failed', 'message' => 'something went wrong!!, Maybe Yur ID is INVALID'], 400);
             }
         } else {
             $this->response(array('status' => 'fail', 502));
@@ -77,8 +91,7 @@ class Pembelian_Produk extends RESTController
     function index_delete()
     {
         $id = $this->delete('id_pembelian_produk');
-        $this->db->where('id_pembelian_produk', $id);
-        $delete = $this->db->delete('pembelian_produk');
+        $delete = $this->Pembelianproduk_Model->deletepembelianproduk($id);
         if ($delete) {
             $this->response(array('status' => true, 'message' => 'Pembelia Produk Berhasil Terhapus !!!'), 202);
         } else {

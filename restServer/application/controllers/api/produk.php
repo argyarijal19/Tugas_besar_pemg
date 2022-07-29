@@ -11,38 +11,53 @@ class Produk extends RESTController
     function __construct($config = 'rest')
     {
         parent::__construct($config);
-        $this->load->database();
+        $this->load->model('Produk_Model');
     }
-    function index_get()
+
+    function produkid_get()
     {
         $id = $this->get('id_produk');
-        if ($id == '') {
-            $this->db->select('p.nama_produk, p.harga_produk, p.berat_produk, p.foto_produk, p.deskripsi_produk, p.stok_produk, k.nama_kategori');
-            $this->db->from('produk p');
-            $this->db->join('kategori k', 'p.id_kategori=k.id_kategori');
-            $user = $this->db->get()->result();
-        } else {
-            $this->db->where('id_produk', $id);
-            $user = $this->db->get('produk')->result();
+        $data = $this->Produk_Model->getProdukID($id);
+        if($data != null ){
+            $this->response([
+            'message' => 'SUCCESS !!',
+            'data' => $data,
+            'status' => 200
+            ], 200);
+        }else{
+            $this->response([
+                'message' => 'DATA DOES NOT EXIST !!',
+                'data' => $data,
+                'status' => 404
+            ], 404);
         }
-        $this->response($user, 200);
+    }
+
+    function index_get()
+    {
+        $data = $this->Produk_Model->getProduk();
+        if($data != null ){
+            $this->response([
+            'message' => 'SUCCESS !!',
+            'data' => $data,
+            'status' => 200
+            ], 200);
+        }else{
+            $this->response([
+                'message' => 'DATA DOES NOT EXIST !!',
+                'data' => $data,
+                'status' => 404
+            ], 404);
+        }
     }
     function index_post()
     {
-        $data = array(
-            'id_kategori' => $this->post('id_kategori'),
-            'nama_produk' => $this->post('nama_produk'),
-            'harga_produk' => $this->post('harga_produk'),
-            'berat_produk' => $this->post('berat_produk'),
-            'foto_produk' => $this->post('foto_produk'),
-            'deskripsi_produk' => $this->post('deskripsi_produk'),
-            'stok_produk' => $this->post('stok_produk')
-        );
-        $insert = $this->db->insert('produk', $data);
+        
+        $insert = $this->Produk_Model->postproduk();
         if ($insert) {
             $this->response([
                 'message' => 'Berhasil Input Produk',
-                'data' => $data], 200);
+                'data' => $insert], 200);
         } else {
             $this->response(array('status' => 'fail', 502));
         }
@@ -59,8 +74,7 @@ class Produk extends RESTController
             'deskripsi_produk' => $this->put('deskripsi_produk'),
             'stok_produk' => $this->put('stok_produk')
         );
-        $this->db->where('id_produk', $npm);
-        $update = $this->db->update('produk', $data);
+        $update = $this->Produk_Model->updateproduk($npm, $data); 
         if ($update) {
             if ($this->db->affected_rows() == 1) {
                 $this->response(['status' => 'success', 'message' => 'Produk UPDATED !', 'data' => $data], 200);
@@ -74,8 +88,7 @@ class Produk extends RESTController
     function index_delete()
     {
         $id = $this->delete('id_produk');
-        $this->db->where('id_produk', $id);
-        $delete = $this->db->delete('produk');
+        $delete = $this->Produk_Model->deleteproduk($id);
         if ($delete) {
             $this->response(array('status' => true, 'message' => 'Produk has been DELETED !!!'), 202);
         } else {
