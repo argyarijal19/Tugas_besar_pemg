@@ -1,9 +1,7 @@
 <<<<<<< HEAD
 # Tugas_besar_pemg
 =======
-url dari rest server ini adalah http://localhost/pemograman-3/Tugas_Besar/restServer/api/ + endpoin yang sudah di sediakan pada controller/api 
->>>>>>> 814c798031d5a06459b123f5e59a000db7909972
-
+url dari rest server ini adalah http://localhost/pemograman-3/Tugas_Besar/restServer/api/ + endpoin yang sudah di sediakan pada controller/api
 
 ======= UNTUK MENGAKSES DATA BBERDASARKAN DENGAN IDNYA TAMBAHKAN ENDPOIN SEPERTI BERIKUT
 
@@ -15,5 +13,7 @@ url dari rest server ini adalah http://localhost/pemograman-3/Tugas_Besar/restSe
 6. /admin/adminID ======> untuk data berdasarkan id_admin
 
 ===== CONTOH PENGGUNAAN AKSES DATA BERDASARKAN ID 
+
+
 http://localhost/pemograman-3/Tugas_Besar/restServer/api/admin/adminID?id_admin=15
 ===>> NB :: TAMBAHKAN PARAMETER (id_admin) PADA FORM PARAMS DI POSTMEN UNTUK MENGECEK APAKAH DATA NYA ADA ATAU TIDAK
