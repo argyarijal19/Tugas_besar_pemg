@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 23, 2022 at 01:49 PM
+-- Generation Time: Jul 30, 2022 at 07:54 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -87,7 +87,8 @@ CREATE TABLE `keys` (
 --
 
 INSERT INTO `keys` (`id`, `user_id`, `key`, `level`, `ignore_limits`, `is_private_key`, `ip_addresses`, `date_created`) VALUES
-(1, 1, 'MyKey', 0, 0, 0, NULL, 0);
+(1, 0, 'MyKey', 0, 0, 0, NULL, 0),
+(2, 1, 'zJixXtP64Y', 1, 0, 0, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -137,7 +138,7 @@ CREATE TABLE `pembelian` (
 --
 
 INSERT INTO `pembelian` (`id_pembelian`, `id_pelanggan`, `tanggal_pembelian`, `total_pembelian`, `id_ongkir`, `nama_kota`, `tarif`, `alamat_rumah`, `status_pembelian`, `resi_pengiriman`) VALUES
-(38, 29, '2021-01-28', 110000, 2, 'bandung', 20000, 'cimahi kota sampah', 'Barang Dikirim', 'ABCDSF12345432'),
+(38, 29, '2022-07-30', 200000, 2, 'bandung', 10000, 'jl ciwaruga samping komplek mustika residence', 'barang dikirm', 'DSDFFDADJNVJNJ'),
 (39, 30, '2021-01-28', 60000, 1, 'Pangandaran', 10000, 'kuningan jawbarat', 'Barang Dikirim', 'ABCDSF12345432'),
 (40, 29, '2021-01-29', 100000, 1, 'Pangandaran', 10000, 'desa sindangjaya kec mangunjaya kab pangandaran', 'pending', ''),
 (41, 31, '2021-01-29', 200000, 2, 'bandung', 20000, 'sarijadi desa ciwaruga', 'Barang Dikirim', 'ASBGH123454231'),
@@ -214,6 +215,25 @@ INSERT INTO `produk` (`id_produk`, `id_kategori`, `nama_produk`, `harga_produk`,
 (39, 5, 'CardiBy.me Gamis Muslimah', 250000, 250, 'muslim.png', 'gamis yang lembut dan tidak gerah pada saat cuaca panas tapi juga tidak tipis karena bahan yng di gunakan adakan bahan sintesis wol yaitu bahan yang menjadi alternatif di autralia agar hemat dan ramah lingkungan       ', 10),
 (40, 5, 'cek API', 20000, 200, '.jpg', 'ini adalah cek api post', 1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `user_id` int(11) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`user_id`, `username`, `password`) VALUES
+(1, 'argya', '123');
+
 --
 -- Indexes for dumped tables
 --
@@ -261,6 +281,12 @@ ALTER TABLE `produk`
   ADD PRIMARY KEY (`id_produk`);
 
 --
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`user_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -268,43 +294,49 @@ ALTER TABLE `produk`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `kategori`
 --
 ALTER TABLE `kategori`
-  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `keys`
 --
 ALTER TABLE `keys`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `pelanggan`
 --
 ALTER TABLE `pelanggan`
-  MODIFY `id_pelanggan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id_pelanggan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `pembelian`
 --
 ALTER TABLE `pembelian`
-  MODIFY `id_pembelian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id_pembelian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `pembelian_produk`
 --
 ALTER TABLE `pembelian_produk`
-  MODIFY `id_pembelian_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id_pembelian_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
