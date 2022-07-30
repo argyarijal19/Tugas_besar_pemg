@@ -14,7 +14,7 @@
         <h3 class="text-center">GENERATE KEY</h3>
         <hr>
         <form action="<?php echo base_url('auth/generateKey') ?>" method="POST">
-            <?php $id = $this->session->userdata('id_user') ?>
+            <?php $id = $this->session->userdata('user_id') ?>
             <?php $this->db->where('user_id', $id);
             // here we select every column of the table
             $q = $this->db->get('keys');

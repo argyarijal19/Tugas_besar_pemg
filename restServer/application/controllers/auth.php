@@ -29,7 +29,7 @@ class Auth extends CI_Controller
             foreach ($user->result() as $data) {
                 $user_data = array(
                     'username' => $data->username,
-                    'id_user' => $data->id_user
+                    'user_id' => $data->user_id
                 );
                 $this->session->set_userdata($user_data);
             }
@@ -75,7 +75,7 @@ class Auth extends CI_Controller
 
         /*Check submit button */
         if ($this->input->post('submit')) {
-            $data['user_id'] = $this->session->userdata('id_user');
+            $data['user_id'] = $this->session->userdata('user_id');
             $data['key'] = random_string('alnum', 10);
             $data['level'] = 1;
             $this->db->where('user_id', $data['user_id']);
