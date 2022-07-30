@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 30, 2022 at 07:54 PM
+-- Generation Time: Jul 30, 2022 at 09:00 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -191,7 +191,7 @@ CREATE TABLE `produk` (
   `nama_produk` varchar(100) NOT NULL,
   `harga_produk` int(11) NOT NULL,
   `berat_produk` float NOT NULL,
-  `foto_produk` varchar(100) NOT NULL,
+  `foto_produk` varchar(1000) NOT NULL,
   `deskripsi_produk` text NOT NULL,
   `stok_produk` int(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -201,19 +201,18 @@ CREATE TABLE `produk` (
 --
 
 INSERT INTO `produk` (`id_produk`, `id_kategori`, `nama_produk`, `harga_produk`, `berat_produk`, `foto_produk`, `deskripsi_produk`, `stok_produk`) VALUES
-(27, 1, 'cardigan pria', 50000, 300, '10.png', 'cardigan pria yang elegant dan membuat kita terliat fashionable dengan bahan sutra sehingga lembut saat di gunakan                             ', 0),
-(28, 1, 'cardigan all gender', 70000, 350, '12.png', 'cardigan ini cocok untuk pria maupun wanita dengan bahan kain rajutan tangan sehingga terlihat lebih elegant dan nyaman di gunakan dalam cuaca panas atau pun dingin                      ', 0),
-(29, 1, 'cardigan merah jambu', 50000, 150, '5.png', 'cardigan wanita yang lucu dan imut dengan bahan yang lembut mampu membuat anda terlihat lebih feminim       ', 3),
-(30, 1, 'cardigan musim dingin', 100000, 200, '11.png', 'cardigan ini cocok untuk musim pancaroba karena memiliki bahan dari kain wol sehingga bisa membuat anda hangat sehangat anda dalam pelukan nya               ', 4),
-(31, 1, 'cardigan vanila', 65000, 400, '4.png', 'cardigan nyaman dengan warna yang relatif lebih sejuk dan hangat saaat di gunakan         ', 5),
-(33, 1, 'cardigan kekinian', 70000, 400, '8.png', 'cardigan yang sangat cocok untuk wanita yang luar biasa               ', 4),
-(34, 2, 'kerudung muslimah ', 50000, 150, 'kerudung 3.jpg', 'kerudung segi empat untuk muslimah yang ingin berhijrah dengan corak bunga yang indah                                                                ', 4),
-(35, 2, 'kerudung muslimah edan parah', 100000, 119, 'ker 2.png', 'kerudung dengan bahan sutra yang lembut dan tidak gatal saat di kenakan                      ', 10),
-(36, 2, 'cardiBy.me segi4 for muslimah', 230000, 500, 'ker3.png', 'couple muslimah style untuk sahabat atau hadiah kepada adik sangat cocok sekali dengan design yang elegant dan mewah dan bahan yang lembut        ', 9),
-(37, 2, 'kerudung muslimah segi empat', 100000, 150, 'ker4.png', 'bahan ringan dan sejuk saat di kenakan dan memiliki tingkan kelembutan yang super sotf sehingga bisa membuat anda betah memakai kerudung ini meskipun di kenakan seharian       ', 11),
-(38, 2, 'Kerudung cardiBy.me muslimah', 120000, 140, 'kerudung 8.jpg', 'bahan karet gelang yang istimewa sehingga bisa membuat para pengguna nya dapat ketenangan dan kedaimaian        ', 5),
-(39, 5, 'CardiBy.me Gamis Muslimah', 250000, 250, 'muslim.png', 'gamis yang lembut dan tidak gerah pada saat cuaca panas tapi juga tidak tipis karena bahan yng di gunakan adakan bahan sintesis wol yaitu bahan yang menjadi alternatif di autralia agar hemat dan ramah lingkungan       ', 10),
-(40, 5, 'cek API', 20000, 200, '.jpg', 'ini adalah cek api post', 1);
+(27, 1, 'cardigan pria', 50000, 300, 'https://hm-media-prod.s3.amazonaws.com/pub/media/catalog/product/medium/edd641bdc987c5a7627fdbd9c1abdfe2037c9911_xxl-1.jpg', 'cardigan pria yang elegant dan membuat kita terliat fashionable dengan bahan sutra sehingga lembut saat di gunakan                             ', 0),
+(28, 1, 'cardigan all gender', 70000, 350, 'https://image.made-in-china.com/202f0j00hCURWvYMgboP/European-and-American-Autumn-and-Winter-New-V-Neck-Button-Striped-Sweater-Cardigan.jpg', 'cardigan ini cocok untuk pria maupun wanita dengan bahan kain rajutan tangan sehingga terlihat lebih elegant dan nyaman di gunakan dalam cuaca panas atau pun dingin                      ', 0),
+(29, 1, 'cardigan merah jambu', 50000, 150, 'https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//101/MTA-19182818/no_brand_cardigan-atasan_importlengan_panjang_sweater-fashion_wanita-sweater_wanita_full13_gii1v3x0.jpg', 'cardigan wanita yang lucu dan imut dengan bahan yang lembut mampu membuat anda terlihat lebih feminim       ', 3),
+(30, 1, 'cardigan musim dingin', 100000, 200, 'https://s4.bukalapak.com/img/9252523702/large/baju_musim_dingin_sale_JAKET_OUTER_CARDIGAN_FASHION_WANITA_K.png', 'cardigan ini cocok untuk musim pancaroba karena memiliki bahan dari kain wol sehingga bisa membuat anda hangat sehangat anda dalam pelukan nya               ', 4),
+(31, 1, 'cardigan vanila', 65000, 400, 'https://www.ilovetall.com/media/image/27/ae/f8/ILOVETALL-Damen-Cardigan-offen-extralang-Langgr%C3%B6sse-vanilla-gelb-2621-2.jpg', 'cardigan nyaman dengan warna yang relatif lebih sejuk dan hangat saaat di gunakan         ', 5),
+(33, 1, 'cardigan kekinian', 70000, 400, 'https://s1.thcdn.com/productimg/1600/1600/13331780-1024898225049843.jpg', 'cardigan yang sangat cocok untuk wanita yang luar biasa               ', 4),
+(34, 2, 'kerudung muslimah ', 50000, 150, 'https://cf.shopee.co.id/file/a327492da9199d66a25c6dff3ccb47e8', 'kerudung segi empat untuk muslimah yang ingin berhijrah dengan corak bunga yang indah                                                                ', 4),
+(35, 2, 'kerudung muslimah edan parah', 100000, 119, 'https://s0.bukalapak.com/img/06083920241/large/KHIMAR_TERBARU_JILBAB_MUSLIMAH_KERUDUNG_TRENDY_KHIMAR_ANNISA.jpg', 'kerudung dengan bahan sutra yang lembut dan tidak gatal saat di kenakan                      ', 10),
+(36, 2, 'cardiBy.me segi4 for muslimah', 230000, 500, 'https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//97/MTA-7370196/mystory_mystory_larissa_hijab_muslimah_full04_tvy79ci5.jpg', 'couple muslimah style untuk sahabat atau hadiah kepada adik sangat cocok sekali dengan design yang elegant dan mewah dan bahan yang lembut        ', 9),
+(37, 2, 'kerudung muslimah segi empat', 100000, 150, 'https://a.ipricegroup.com/media/Maria/koleksi_hijab_untuk_wanita_muslim.png', 'bahan ringan dan sejuk saat di kenakan dan memiliki tingkan kelembutan yang super sotf sehingga bisa membuat anda betah memakai kerudung ini meskipun di kenakan seharian       ', 11),
+(38, 2, 'Kerudung cardiBy.me muslimah', 120000, 140, 'https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//94/MTA-6781261/mydailyhijab_mydailyhijab_segi_4_voal_aisyah_lasercut_hijab_muslimah_full06_ozwtiit7.jpg', 'bahan karet gelang yang istimewa sehingga bisa membuat para pengguna nya dapat ketenangan dan kedaimaian        ', 5),
+(39, 5, 'CardiBy.me Gamis Muslimah', 250000, 250, 'https://s2.bukalapak.com/img/70985560792/s-330-330/data.jpeg.webp', 'gamis yang lembut dan tidak gerah pada saat cuaca panas tapi juga tidak tipis karena bahan yng di gunakan adakan bahan sintesis wol yaitu bahan yang menjadi alternatif di autralia agar hemat dan ramah lingkungan       ', 10);
 
 -- --------------------------------------------------------
 
