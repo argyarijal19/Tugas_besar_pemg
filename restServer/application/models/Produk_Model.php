@@ -33,7 +33,7 @@ class Produk_Model extends CI_Model
         return $produk;
 	}
 
-    public function postpembelian()
+    public function postproduk()
     {
         $data = array(
             'id_kategori' => $this->input->post('id_kategori'),
