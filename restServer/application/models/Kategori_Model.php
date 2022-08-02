@@ -39,11 +39,10 @@ class Kategori_Model extends CI_Model
         return $insert;
     }
 
-    public function updatekategori($id, $data)
+    public function updatekategori($data, $id_kategori)
     {
-        $this->db->where('id_kategori', $id);
-        $update = $this->db->update('kategori', $data);
-        return $update;
+        $this->db->update('kategori',$data,['id_kategori' => $id_kategori]);
+        return $this->db->affected_rows();
     }
     public function deletekategori($id)
     {

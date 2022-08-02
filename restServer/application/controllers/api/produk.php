@@ -64,17 +64,17 @@ class Produk extends RESTController
     }
     function index_put()
     {
-        $npm = $this->put('id_produk');
+        $id_produk = $this->put('id_produk');
         $data = array(
-            'id_kategori' => $this->put('id_kategori'),
             'nama_produk' => $this->put('nama_produk'),
             'harga_produk' => $this->put('harga_produk'),
             'berat_produk' => $this->put('berat_produk'),
             'foto_produk' => $this->put('foto_produk'),
             'deskripsi_produk' => $this->put('deskripsi_produk'),
-            'stok_produk' => $this->put('stok_produk')
+            'stok_produk' => $this->put('stok_produk'),
+            'id_kategori' => $this->put('id_kategori')
         );
-        $update = $this->Produk_Model->updateproduk($npm, $data); 
+        $update = $this->Produk_Model->updateproduk($data, $id_produk); 
         if ($update) {
             if ($this->db->affected_rows() == 1) {
                 $this->response(['status' => 'success', 'message' => 'Produk UPDATED !', 'data' => $data], 200);

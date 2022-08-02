@@ -62,21 +62,46 @@ class Kategori extends RESTController
     }
     function index_put()
     {
-        $id = $this->put('id_kategori');
+        $id_kategori = $this->put('id_kategori');
         $data = array(
-            'nama_kategori' => $this->put('nama_kategori')
+            'nama_kategori' => $this->put('nama_kategori'),
+
         );
-        $update = $this->Kategori_Model->updatekategori($id, $data);
-        if ($update) {
-            if ($this->db->affected_rows() == 1) {
-                $this->response(['status' => 'success', 'message' => 'kategori UPDATED !', 'data' => $data], 200);
-            } else {
-                $this->response(['status' => 'update failed', 'message' => 'something went wrong!!'], 400);
-            }
+
+        //Jika field id_kategori tidak diisi
+        if ($id_kategori == NULL) {
+            $this->response(
+                [
+                    'status' => $id_kategori,
+                    'response_code' => RestController::HTTP_BAD_REQUEST,
+                    'message' => 'id_kategori Tidak Boleh Kosong',
+                ],
+                RestController::HTTP_BAD_REQUEST
+            );
+        //Jika data berhasil berubah
+        } elseif ($this->Kategori_Model->updatekategori($data, $id_kategori) > 0) {
+            $this->response(
+                [
+                    'status' => true,
+                    'response_code' => RestController::HTTP_CREATED,
+                    'message' => 'Data Makanan Dengan id_kategori '.$id_kategori.' Berhasil Diubah',
+                ],
+                RestController::HTTP_CREATED
+            );
         } else {
-            $this->response(array('status' => 'fail', 502));
+            $this->response(
+                [
+                    'status' => false,
+                    'response_code' => RestController::HTTP_BAD_REQUEST,
+                    'message' => 'Gagal Mengubah Data',
+                ],
+                RestController::HTTP_BAD_REQUEST
+            );
         }
     }
+
+
+    
     function index_delete()
     {
         $id = $this->delete('id_kategori');

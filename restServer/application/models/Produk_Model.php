@@ -48,12 +48,12 @@ class Produk_Model extends CI_Model
         return $insert;
     }
 
-    public function updateproduk($id, $data)
+    public function updateproduk($data, $id_produk)
     {
-        $this->db->where('id_produk', $id);
-        $update = $this->db->update('produk', $data);
-        return $update;
+        $this->db->update('produk',$data,['id_produk' => $id_produk]);
+        return $this->db->affected_rows();
     }
+   
     public function deleteproduk($id)
     {
         $this->db->where('id_produk', $id);
