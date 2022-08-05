@@ -6,18 +6,18 @@ require APPPATH . "libraries/RestController.php";
 
 use chriskacerguis\RestServer\RestController;
 
-class Pembelian extends RESTController
+class checkout extends RESTController
 {
     function __construct($config = 'rest')
     {
         parent::__construct($config);
-        $this->load->model('Pembelian_Model');
+        $this->load->model('checkout_model');
     }
 
-    function pembelianid_get()
+    function checkoutid_get()
     {
-        $id = $this->get('id_pembelian');
-        $data = $this->Pembelian_Model->getPembelianID($id);
+        $id = $this->get('id_checkout');
+        $data = $this->checkout_model->getcheckoutID($id);
         if($data != null ){
             $this->response([
             'message' => 'SUCCESS !!',
@@ -35,8 +35,8 @@ class Pembelian extends RESTController
 
     function index_get()
     {
-        $id = $this->get('id_pembelian');
-        $data = $this->Pembelian_Model->getPembelian();
+        $id = $this->get('id_checkout');
+        $data = $this->checkout_model->getcheckout();
         if($data != null ){
             $this->response([
             'message' => 'SUCCESS !!',
@@ -55,7 +55,7 @@ class Pembelian extends RESTController
     function index_post()
     {
         
-        $insert = $this->Pembelian_Model->postpembelian();
+        $insert = $this->checkout_model->postcheckout();
         if ($insert) {
             // $this->response($data, 200);
             $this->response(['status' => 'success', 'message' => 'Pembelian Berhasil Ditambahkan!', 'data' => $insert], 200);
@@ -65,35 +65,21 @@ class Pembelian extends RESTController
     }
     function index_put()
     {
-        $id = $this->put('id_pembelian');
+        $id = $this->put('id_checkout');
         $data = array(
-            'id_pelanggan' => $this->put('id_pelanggan'),
-            'tanggal_pembelian' => $this->put('tanggal_pembelian'),
-            'total_pembelian' => $this->put('total_pembelian'),
-            'id_ongkir' => $this->put('id_ongkir'),
-            'nama_kota' => $this->put('nama_kota'),
-            'tarif' => $this->put('tarif'),
-            'alamat_rumah' => $this->put('alamat_rumah'),
-            'status_pembelian' => $this->put('status_pembelian'),
-            'resi_pengiriman' => $this->put('resi_pengiriman')
+            'id_pelanggan' => $this->input->put('id_pelanggan'),
+            'tanggal_pembelian' => $this->input->put('tanggal_pembelian'),
+            'total_pembelian' => $this->input->put('total_pembelian'),
+            'id_ongkir' => $this->input->put('id_ongkir'),
+            'alamat_rumah' => $this->input->put('alamat_rumah')
         );
-        $update = $this->Pembelian_Model->updatepembelian($id, $data);
+        $update = $this->checkout_model->updatecheckout($id, $data);
         if ($update) {
             if ($this->db->affected_rows() == 1) {
                 $this->response(['status' => 'success', 'message' => 'Pembelian berhasil UPDATE !', 'data' => $data], 200);
             } else {
                 $this->response(['status' => 'update failed', 'message' => 'something went wrong!!'], 400);
             }
-        } else {
-            $this->response(array('status' => 'fail', 502));
-        }
-    }
-    function index_delete()
-    {
-        $id = $this->delete('id_pembelian');
-        $delete = $this->Pembelian_Model->deletepembelian($id);
-        if ($delete) {
-            $this->response(array('status' => true, 'message' => 'Pembellian Berhasil terhapus !!!'), 202);
         } else {
             $this->response(array('status' => 'fail', 502));
         }
