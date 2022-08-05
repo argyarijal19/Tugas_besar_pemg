@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 02, 2022 at 03:49 PM
+-- Generation Time: Aug 05, 2022 at 01:07 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -54,16 +54,17 @@ CREATE TABLE `chart` (
   `id_chart` int(11) NOT NULL,
   `id_pelanggan` int(11) NOT NULL,
   `id_produk` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL
+  `quantity` int(11) NOT NULL,
+  `status` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `chart`
 --
 
-INSERT INTO `chart` (`id_chart`, `id_pelanggan`, `id_produk`, `quantity`) VALUES
-(1, 29, 27, 1),
-(2, 29, 29, 2);
+INSERT INTO `chart` (`id_chart`, `id_pelanggan`, `id_produk`, `quantity`, `status`) VALUES
+(1, 29, 27, 1, ''),
+(2, 29, 29, 2, '');
 
 -- --------------------------------------------------------
 
@@ -89,7 +90,8 @@ INSERT INTO `checkout` (`id_checkout`, `id_pelanggan`, `tanggal_pembelian`, `tot
 (39, 30, '2021-01-28', 60000, 1, 'kuningan jawbarat'),
 (40, 29, '2021-01-29', 100000, 1, 'desa sindangjaya kec mangunjaya kab pangandaran'),
 (41, 31, '2021-01-29', 200000, 2, 'sarijadi desa ciwaruga'),
-(42, 30, '2021-01-29', 80000, 1, 'desa sindangjaya');
+(42, 30, '2021-01-29', 80000, 1, 'desa sindangjaya'),
+(44, 30, '2022-08-04', 55000, 2, 'bandung');
 
 -- --------------------------------------------------------
 
@@ -149,6 +151,14 @@ CREATE TABLE `ongkir` (
   `nama_kota` varchar(100) NOT NULL,
   `tarif` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `ongkir`
+--
+
+INSERT INTO `ongkir` (`id_ongkir`, `nama_kota`, `tarif`) VALUES
+(2, 'jakarta', 10000),
+(4, 'surabaya', 55000);
 
 -- --------------------------------------------------------
 
@@ -346,7 +356,7 @@ ALTER TABLE `chart`
 -- AUTO_INCREMENT for table `checkout`
 --
 ALTER TABLE `checkout`
-  MODIFY `id_checkout` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id_checkout` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `kategori`
@@ -364,7 +374,7 @@ ALTER TABLE `keys`
 -- AUTO_INCREMENT for table `ongkir`
 --
 ALTER TABLE `ongkir`
-  MODIFY `id_ongkir` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_ongkir` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `pelanggan`
