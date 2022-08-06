@@ -14,10 +14,10 @@ class checkout extends RESTController
         $this->load->model('checkout_model');
     }
 
-    function checkoutid_get()
+    function index_get()
     {
-        $id = $this->get('id_checkout');
-        $data = $this->checkout_model->getcheckoutID($id);
+        $id = $this->get('id_pelanggan');
+        $data = $this->checkout_model->getchekoutID($id);
         if($data != null ){
             $this->response([
             'message' => 'SUCCESS !!',
@@ -28,15 +28,15 @@ class checkout extends RESTController
             $this->response([
                 'message' => 'DATA DOES NOT EXIST !!',
                 'data' => $data,
-                'status' => 404
-            ], 404);
+                'status' => 200
+            ], 200);
         }
     }
 
-    function index_get()
+    function ID_get()
     {
         $id = $this->get('id_checkout');
-        $data = $this->checkout_model->getcheckout();
+        $data = $this->checkout_model->getID($id);
         if($data != null ){
             $this->response([
             'message' => 'SUCCESS !!',
@@ -47,8 +47,8 @@ class checkout extends RESTController
             $this->response([
                 'message' => 'DATA DOES NOT EXIST !!',
                 'data' => $data,
-                'status' => 404
-            ], 404);
+                'status' => 200
+            ], 200);
         }
     }
 
